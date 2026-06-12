@@ -22,7 +22,7 @@
 
     both: django-admin startproject NAME_FOLDER .
 
-7. python manage.py startapp posts
+7. python3 manage.py startapp NAME_FILE. 
 
 8. Models in Django need to be written inside of the models.py file on any application when we finish them we need to run these commands:
 
