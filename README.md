@@ -36,3 +36,8 @@ touch FILENAME.EXENSION allows you to create files on the terminal.
 mkdir FOLDERNAME makes folders in terminal
 # 112-Django-intro
 # 113-Django-intermediate
+
+
+A.login/logout use path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    create 'login.html' and 'logged_out.html'

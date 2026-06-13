@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'recipes', 'pages',
+    'recipes', 
+    'pages',
+    'accounts',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,3 +128,5 @@ STATICFILES_DIR = [str(BASE_DIR.joinpath('static'))]
 #Media FIles
 MEDIA_URL = 'media/'
 MEDIA_ROOT = str(BASE_DIR.joinpath("media"))
+
+LOGIN_REDIRECT_URL = 'home'
