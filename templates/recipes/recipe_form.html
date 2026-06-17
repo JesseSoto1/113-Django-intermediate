@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-9">
+
+      <h2>{% if object %}Update Recipe{% else %}New Recipe{% endif %}</h2>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% comment %} ── Main recipe fields (crispy) ── {% endcomment %}
+        {% crispy form %}
+
+        {% comment %} ── Ingredients section (manual) ── {% endcomment %}
+        <hr>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Ingredients</h5>
+          <button type="button" id="add-ingredient-btn" class="btn btn-sm btn-outline-success">
+            + Add Ingredient
+          </button>
+        </div>
+
+        {% if ingredient_formset.non_form_errors %}
+          <div class="alert alert-danger">{{ ingredient_formset.non_form_errors }}</div>
+        {% endif %}
+
+        {{ ingredient_formset.management_form }}
+
+        {% comment %} ── Column headers ── {% endcomment %}
+        <div class="row g-2 mb-1 px-2">
+          <div class="col-md-4"><span class="form-label small fw-semibold">Ingredient</span></div>
+          <div class="col-md-2"><span class="form-label small fw-semibold">Quantity</span></div>
+          <div class="col-md-3"><span class="form-label small fw-semibold">Unit</span></div>
+          <div class="col-md-2"><span class="form-label small fw-semibold">Notes</span></div>
+          <div class="col-md-1"></div>
+        </div>
+
+        {% comment %} ── Existing + initial rows ── {% endcomment %}
+        <div id="ingredient-formset-container">
+          {% for ingredient_form in ingredient_formset %}
+            <div class="ingredient-row border rounded p-2 mb-2">
+              <div class="row g-2 align-items-center">
+
+                <div class="col-md-4">
+                  {{ ingredient_form.ingredient }}
+                  {{ ingredient_form.ingredient.errors }}
+                </div>
+                <div class="col-md-2">
+                  {{ ingredient_form.quantity }}
+                  {{ ingredient_form.quantity.errors }}
+                </div>
+                <div class="col-md-3">
+                  {{ ingredient_form.unit }}
+                  {{ ingredient_form.unit.errors }}
+                </div>
+                <div class="col-md-2">
+                  {{ ingredient_form.notes }}
+                  {{ ingredient_form.notes.errors }}
+                </div>
+
+                <div class="col-md-1 text-center">
+                  {{ ingredient_form.id }}
+                  {% if ingredient_form.instance.pk %}
+                    {% comment %} Existing row: use Django's DELETE checkbox {% endcomment %}
+                    <div class="form-check d-flex flex-column align-items-center">
+                      {{ ingredient_form.DELETE }}
+                      <label class="form-check-label small text-danger"
+                            for="{{ ingredient_form.DELETE.id_for_label }}">
+                        Del
+                      </label>
+                    </div>
+                  {% else %}
+                    {% comment %} New row: just remove it from the DOM {% endcomment %}
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger remove-row-btn"
+                            title="Remove">
+                      ✕
+                    </button>
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% comment %} ── Hidden empty form template for JS cloning ── {% endcomment %}
+        <div id="empty-ingredient-form" class="d-none">
+          <div class="ingredient-row border rounded p-2 mb-2">
+            <div class="row g-2 align-items-center">
+              <div class="col-md-4">{{ ingredient_formset.empty_form.ingredient }}</div>
+              <div class="col-md-2">{{ ingredient_formset.empty_form.quantity }}</div>
+              <div class="col-md-3">{{ ingredient_formset.empty_form.unit }}</div>
+              <div class="col-md-2">{{ ingredient_formset.empty_form.notes }}</div>
+              <div class="col-md-1 text-center">
+                {{ ingredient_formset.empty_form.id }}
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger remove-row-btn"
+                        title="Remove">
+                  ✕
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <div class="d-flex gap-2 mt-3">
+          <button type="submit" class="btn btn-primary">
+            {% if object %}Save Changes{% else %}Create Recipe{% endif %}
+          </button>
+          <a href="{% url 'recipe_list' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/recipe_form.js' %}"></script>
+{% endblock %}
