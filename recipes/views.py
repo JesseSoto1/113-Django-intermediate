@@ -49,12 +49,12 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         return redirect(self.get_success_url())
     
     def get_success_url(self):
-        return reverse_lazy('recipe_detail', self.kwargs=={'slug': self.object.slug})
+        return reverse_lazy('recipe_detail', kwargs={'slug': self.object.slug})
     
 
 class RecipeListView(ListView):
     model = Recipe
-    template_name = 'recipe/list.html'
+    template_name = 'recipes/list.html'
     context_object_name = 'recipes'
     paginate_by = 9
 
@@ -63,7 +63,7 @@ class RecipeListView(ListView):
 
 class RecipeDetailsView(DetailView):
     model = Recipe
-    template_name = 'recipe/detail.html'
+    template_name = 'recipes/detail.html'
     context_object_name = 'recipe'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
@@ -114,7 +114,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return redirect(self.get_success_url())
     
     def get_success_url(self):
-        return reverse_lazy('recipe_detail', self.kwargs=={'slug': self.object.slug})
+        return reverse_lazy('recipe_detail', kwargs={'slug': self.object.slug})
     
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
@@ -126,5 +126,5 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == recipe.author
     
     def form_valid(self, form):
-        messages.success(self.request, 'Reipe deleted succesfully!')
+        messages.success(self.request, 'Recipe deleted succesfully!')
         return super().form_valid(form)

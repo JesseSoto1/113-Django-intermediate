@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // false rows marked for deletion (existing rows)
     container.addEventListener('change', function(e) {
-        if (e.target.type === 'checkbox' && e.target.name.include('DELETE')) {
+        if (e.target.type === 'checkbox' && e.target.name.includes('DELETE')) {
             const row = e.target.closest('.ingredient-row');
             row.style.capacity = e.target.checked ? '0.4' : '1';
 

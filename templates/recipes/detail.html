@@ -2,7 +2,7 @@
 
 {% block title %}
     Recipe: {{ recipe.title }}
-{% endlbock %}
+{% endblock %}
 
 {% block content %}
     <div class="container md-4">
@@ -27,14 +27,14 @@
                         <li>
                             {% if item.quantity %}{{ item.quantity }}{% endif %}
                             {% if item.unit %}{{ item.get_unit_display }}{% endif %}
-                            {% if item.notes %}<em>{{ items. notes }}</em>{% endif %}
+                            {% if item.notes %}<em>{{ items.notes }}</em>{% endif %}
                         </li>
                     {% endfor %}
 
                 </ul>
 
                 <h4>Instructions</h4>
-                <p>{{ recipe.instructions|linebreakes }}</p>
+                <p>{{ recipe.instructions|linebreaks }}</p>
             </div>
 
             {% if user == recipe.author %}
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <h6 class="card-title">Manage</h6>
                         <a href="{% url 'recipe_update' recipe.slug %}" class=" btn btn-warning w-100 mb-2">Edit Recipe</a>
-                        <a href="{% url 'recipe_delete' recipe.slug %}" class=" btn btn-danger w-100 mb-2">Edit Recipe</a>
+                        <a href="{% url 'recipe_delete' recipe.slug %}" class=" btn btn-danger w-100 mb-2">Delete Recipe</a>
                     </div>
                 </div>
             </div>
