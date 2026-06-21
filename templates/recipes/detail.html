@@ -27,6 +27,7 @@
                         <li>
                             {% if item.quantity %}{{ item.quantity }}{% endif %}
                             {% if item.unit %}{{ item.get_unit_display }}{% endif %}
+                            {{ item.ingredient.name }}
                             {% if item.notes %}<em>{{ items.notes }}</em>{% endif %}
                         </li>
                     {% endfor %}

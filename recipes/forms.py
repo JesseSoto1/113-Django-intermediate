@@ -15,7 +15,7 @@ class RecipeIngredientForm(forms.ModelForm):
         model = RecipeIngredient
         fields = ['ingredient','quantity','unit','notes']
         widgets = {
-            'ingredients': forms.Select(attrs={
+            'ingredient': forms.Select(attrs={
                 'class':'form-select form-select-sm',
             }),
             'quantity': forms.NumberInput(attrs={

@@ -46,7 +46,9 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
             ingredient_formset.save()
 
             messages.success(self.request, 'Recipe created successfully!')
-        return redirect(self.get_success_url())
+            return redirect(self.get_success_url())
+        
+        return self.render_to_response(context)
     
     def get_success_url(self):
         return reverse_lazy('recipe_detail', kwargs={'slug': self.object.slug})
@@ -111,7 +113,8 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             ingredient_formset.save()
 
             messages.success(self.request, 'Recipe updated successfully!')
-        return redirect(self.get_success_url())
+            return redirect(self.get_success_url())
+        return self.render_to_response(context)
     
     def get_success_url(self):
         return reverse_lazy('recipe_detail', kwargs={'slug': self.object.slug})
